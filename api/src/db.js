@@ -13,24 +13,41 @@ if (!fs.existsSync(directorioDeSubida)) {
 }
 
 const sequelize = new Sequelize(
-  process.env.DATABASE_URL, {
-    dialect: 'postgres',
-    protocol: 'postgres',
+  DATABASE_URL || `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`,
+  {
+    logging: false,
+    native: false,
+    dialect: "postgres",
     dialectOptions: {
       ssl: {
         require: true,
-        rejectUnauthorized: false
-      }
-    }
+        rejectUnauthorized: false,
+      },
+    },
   }
 );
+
+
+// const sequelize = new Sequelize(
+//   process.env.DATABASE_URL, {
+//     dialect: 'postgres',
+//     protocol: 'postgres',
+//     dialectOptions: {
+//       ssl: {
+//         require: true,
+//         rejectUnauthorized: false
+//       }
+//     }
+//   }
+// );
 
 // const sequelize = new Sequelize(
 //   `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`,
 //   {
 //     logging: false,
 //     native: false,
-//     host: "localhost", // Este es el host de tu base de datos
+//     //host: "localhost", // Este es el host de tu base de datos
+//     host: "127.0.0.1",
 //     dialect: "postgres",
 //   }
 // );
